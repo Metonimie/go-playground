@@ -2,6 +2,7 @@ package leap
 
 const testVersion = 3
 
+// IsLeapYear returns true if the given year is a leap year, false otherwise.
 func IsLeapYear(year int) bool {
 
 	if year % 4 == 0 { // True for every year that is divisible by 4
