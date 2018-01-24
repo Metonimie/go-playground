@@ -1,63 +1,31 @@
-// Package raindrop converts numbers into the raindrop language.
+// Package raindrops converts numbers into the raindrop language.
 package raindrops
 
 import (
-	"bytes"
 	"strconv"
+	"bytes"
 )
 
 const testVersion = 3
 
-func raindropLanguage(factors []int) string {
-	var buffer bytes.Buffer
-
-	for _, v := range factors {
-		switch v {
-		case 3:
-			buffer.WriteString("Pling")
-		case 5:
-			buffer.WriteString("Plang")
-		case 7:
-			buffer.WriteString("Plong")
-		}
-	}
-
-	return buffer.String()
-}
-
 // Convert converts a number into the Raindrop Language
 func Convert(n int) string {
-	factors := make([]int, 0, 20)
+	var retval bytes.Buffer
 
-	// Small function to check if factors contains the num.
-	contains := func(num int) bool {
-		for _, v := range factors {
-			if v == num {
-				return true
-			}
-		}
-		return false
+	if n%3 == 0 {
+		retval.WriteString("Pling")
+	}
+	if n%5 == 0 {
+		retval.WriteString("Plang")
+	}
+	if n%7 == 0 {
+		retval.WriteString("Plong")
 	}
 
-	// Using trial division algorithm.
-	number := n
-	factor := 2
-	for number > 1 {
-		if number%factor == 0 {
-			if contains(factor) != true {
-				factors = append(factors, factor)
-			}
-			number = number / factor
-		} else {
-			factor = factor + 1
-		}
+	if len(retval.String()) == 0 {
+		retval.WriteString(strconv.Itoa(n))
 	}
-
-	raindropLangString := raindropLanguage(factors)
-	if len(raindropLangString) == 0 {
-		raindropLangString = strconv.Itoa(n)
-	}
-	return raindropLangString
+	return retval.String()
 }
 
 // Don't forget the test program has a benchmark too.
